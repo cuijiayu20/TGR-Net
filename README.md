@@ -1,6 +1,6 @@
 # TGR-Net: Source Code and Reproduction Package
 
-[![Software DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21888531.svg)](https://doi.org/10.5281/zenodo.21888531)
+[![Software DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22122362.svg)](https://doi.org/10.5281/zenodo.22122362)
 [![DriverWeather DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22121743.svg)](https://doi.org/10.5281/zenodo.22121743)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
@@ -15,13 +15,9 @@ TGR-Net was developed internally under the name `Mamba-KAT`. Legacy class names,
 | Resource | Persistent identifier |
 | --- | --- |
 | Source repository | <https://github.com/cuijiayu20/TGR-Net> |
-| Software archive, v1.0.0 | <https://doi.org/10.5281/zenodo.21888532> |
-| Software concept DOI (all versions) | <https://doi.org/10.5281/zenodo.21888531> |
+| Software archive, v1.0.1 | <https://doi.org/10.5281/zenodo.22122362> |
 | DriverWeather test dataset, v1.0.0 | <https://doi.org/10.5281/zenodo.22121743> |
-| DriverWeather concept DOI (all versions) | <https://doi.org/10.5281/zenodo.22121742> |
 | VOC-FOG, VOC-Rain, VOC-Snow, and synthesis materials | <https://doi.org/10.21227/8g5n-b326> |
-
-For an exact software citation, cite the version DOI. Use the concept DOI when referring to the project across versions.
 
 ## Reproduction Scope
 
@@ -32,7 +28,7 @@ It does not redistribute the full third-party YOLO-World, VOC, or RTTS resources
 ## Package Layout
 
 ```text
-TGR-Net_Source_Code_and_Reproduction_Package_v1.0.0/
+TGR-Net_Source_Code_and_Reproduction_Package_v1.0.1/
 ├── code_overlay/                 # TGR-Net/OW-OVD code and tools copied into YOLO-World
 ├── configs/                      # Training, evaluation, and ablation configurations
 ├── checkpoints/                  # Target location for user-produced checkpoints
@@ -215,11 +211,11 @@ These are lightweight code/configuration checks; they do not reproduce full trai
 @software{cui_2026_tgr_net,
   author    = {Cui, Jiayu},
   title     = {TGR-Net Source Code and Reproduction Package},
-  version   = {1.0.0},
+  version   = {1.0.1},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.21888532},
-  url       = {https://doi.org/10.5281/zenodo.21888532}
+  doi       = {10.5281/zenodo.22122362},
+  url       = {https://doi.org/10.5281/zenodo.22122362}
 }
 ```
 
