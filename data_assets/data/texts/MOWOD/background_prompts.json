@@ -1,0 +1,67 @@
+{
+  "road_driving_surface": [
+    "road",
+    "asphalt road",
+    "street surface",
+    "highway surface",
+    "lane marking",
+    "crosswalk marking",
+    "curb",
+    "sidewalk",
+    "pavement"
+  ],
+  "sky_weather": [
+    "sky",
+    "cloudy sky",
+    "blue sky",
+    "overcast sky",
+    "night sky",
+    "rainy background",
+    "foggy scene",
+    "snowy background"
+  ],
+  "vegetation_nature": [
+    "grass",
+    "tree",
+    "bush",
+    "vegetation",
+    "forest background",
+    "leafy background",
+    "mountain",
+    "rock",
+    "soil",
+    "sand",
+    "snow field",
+    "water surface"
+  ],
+  "urban_static_stuff": [
+    "building facade",
+    "wall",
+    "fence",
+    "guardrail",
+    "bridge",
+    "tunnel wall",
+    "traffic island",
+    "parking lot surface",
+    "construction barrier background"
+  ],
+  "indoor_static_stuff": [
+    "floor",
+    "ceiling",
+    "table surface background",
+    "shelf background",
+    "door surface",
+    "window surface",
+    "curtain background"
+  ],
+  "texture_material": [
+    "concrete texture",
+    "brick texture",
+    "metal surface",
+    "glass surface",
+    "wood surface",
+    "painted wall",
+    "shadow region",
+    "flat background texture"
+  ]
+}

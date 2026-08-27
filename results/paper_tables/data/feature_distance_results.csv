@@ -1,0 +1,5 @@
+Method,Raw_CWD,Enhanced_CWD,CWD_Reduction,Raw_Cosine,Enhanced_Cosine,Relative_Residual
+Full,0.1030,0.1019,0.0011,0.6068,0.5985,0.2176
+Det-only,0.1030,0.1070,-0.0040,0.6068,0.5837,0.2377
+CWD-only,0.1030,0.0894,0.0135,0.6068,0.6328,0.4062
+Shuffled-CWD,0.1030,0.1023,0.0007,0.6068,0.5969,0.2190

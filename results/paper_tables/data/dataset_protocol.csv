@@ -1,0 +1,8 @@
+Dataset,Type,Images,Unknown_GT,Role
+VOC clean,Clean VOC test images,2129,771,Clean-domain reference
+VOC fog,Synthetic fog,2129,771,Synthetic fog degradation
+VOC rain,Synthetic rain,2129,771,Synthetic rain degradation
+VOC snow,Synthetic snow,2129,771,Synthetic snow degradation
+VOC mixed,Synthetic fog+rain+snow,6387,2313,Main adverse-weather benchmark
+RTTS,Real fog,4322,0,Real-weather known-object transfer; unknown metrics not applicable
+Foggy Driving,Small real fog set,101,64,Supplementary real-weather test with high variance

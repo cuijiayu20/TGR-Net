@@ -1,0 +1,42 @@
+{
+  "all": {
+    "n": 3967,
+    "correct_logit_mean": -11.770976221408176,
+    "correct_prob_mean": 0.008150399946883312,
+    "margin_logit_mean": 2.210252915217229,
+    "top1_correct_mean": 0.7368288379127804,
+    "entropy_mean": 0.4253328904464154
+  },
+  "person": {
+    "n": 3258,
+    "correct_logit_mean": -11.20785446032342,
+    "correct_prob_mean": 0.009726753210321888,
+    "margin_logit_mean": 3.220184244064556,
+    "top1_correct_mean": 0.8529772866789441,
+    "entropy_mean": 0.3931446142113151
+  },
+  "bus": {
+    "n": 139,
+    "correct_logit_mean": -15.146981386829623,
+    "correct_prob_mean": 2.2282632282145624e-05,
+    "margin_logit_mean": -2.4758663211795064,
+    "top1_correct_mean": 0.2517985611510791,
+    "entropy_mean": 0.5803869757857827
+  },
+  "car": {
+    "n": 432,
+    "correct_logit_mean": -14.345113714536032,
+    "correct_prob_mean": 0.001132370783150413,
+    "margin_logit_mean": -2.388039027099256,
+    "top1_correct_mean": 0.18518518518518517,
+    "entropy_mean": 0.5601843624097337
+  },
+  "bicycle": {
+    "n": 138,
+    "correct_logit_mean": -13.606907979301784,
+    "correct_prob_mean": 0.0010912548249941572,
+    "margin_logit_mean": -2.518178798150325,
+    "top1_correct_mean": 0.21014492753623187,
+    "entropy_mean": 0.6069347036611354
+  }
+}

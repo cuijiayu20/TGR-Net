@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the archived release and the associated article."
+title: "TGR-Net Source Code and Reproduction Package"
+type: software
+authors:
+  - family-names: Cui
+    given-names: Jiayu
+version: 1.0.0
+date-released: 2026-08-11
+license: GPL-3.0-only
+keywords:
+  - open-vocabulary object detection
+  - open-world object detection
+  - adverse weather
+  - feature recalibration
+references:
+  - type: dataset
+    title: "Object Detection Network Architecture and its Interpretability Study for Visually Degraded Scenes"
+    doi: 10.21227/8g5n-b326

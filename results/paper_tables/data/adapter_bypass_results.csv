@@ -1,0 +1,4 @@
+Mode,Mixed Known AP50,Mixed Known Recall50,Mixed Unknown AP50,Mixed U-Recall
+Adapter enabled,70.0404,84.9958,8.9742,39.9914
+Same checkpoint adapter bypassed,66.5536,81.2129,8.7239,40.5966
+Strict pretrained baseline,66.5536,81.2129,8.7238,40.5966
