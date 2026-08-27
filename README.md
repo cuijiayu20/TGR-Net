@@ -1,84 +1,100 @@
-# TGR-Net Source Code and Reproduction Package
+# TGR-Net: Source Code and Reproduction Package
 
-This package contains the TGR-Net code, configuration files, environment files, lightweight assets, and result summaries needed to reproduce the adverse-weather open-vocabulary open-world detection experiments reported in the associated manuscript.
+[![Software DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21888531.svg)](https://doi.org/10.5281/zenodo.21888531)
+[![DriverWeather DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22121743.svg)](https://doi.org/10.5281/zenodo.22121743)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-It is intended to be overlaid on the full YOLO-World / OW-OVD codebase, not used as a standalone repository.
+## Overview
 
-The implementation was developed under the internal name `Mamba-KAT`. Legacy class names, configuration paths, test names, and result labels retain that identifier so that the released code remains identical to the implementation used for the reported experiments. In the manuscript and this release, the complete method is referred to as TGR-Net.
+This repository contains the TGR-Net source-code overlay, configurations, environment records, lightweight assets, tests, and machine-readable result summaries used for the adverse-weather open-vocabulary open-world object detection experiments reported in the associated manuscript.
+
+TGR-Net was developed internally under the name `Mamba-KAT`. Legacy class names, configuration paths, test names, and result labels retain that identifier so the released files remain traceable to the evaluated implementation. This is a **reproduction overlay**, not a standalone package; it must be copied into the compatible YOLO-World base repository described below.
+
+## Public Records
+
+| Resource | Persistent identifier |
+| --- | --- |
+| Source repository | <https://github.com/cuijiayu20/TGR-Net> |
+| Software archive, v1.0.0 | <https://doi.org/10.5281/zenodo.21888532> |
+| Software concept DOI (all versions) | <https://doi.org/10.5281/zenodo.21888531> |
+| DriverWeather test dataset, v1.0.0 | <https://doi.org/10.5281/zenodo.22121743> |
+| DriverWeather concept DOI (all versions) | <https://doi.org/10.5281/zenodo.22121742> |
+| VOC-FOG, VOC-Rain, VOC-Snow, and synthesis materials | <https://doi.org/10.21227/8g5n-b326> |
+
+For an exact software citation, cite the version DOI. Use the concept DOI when referring to the project across versions.
+
+## Reproduction Scope
+
+The release provides implementation and experiment entry points for inspecting, training, evaluating, and analyzing TGR-Net, plus aggregate result files for checking the manuscript tables.
+
+It does not redistribute the full third-party YOLO-World, VOC, or RTTS resources; the large YOLO-World pretrained checkpoint; a trained TGR-Net checkpoint; or full per-sample prediction logs. Evaluation therefore requires a checkpoint produced by the training procedure below or another compatible checkpoint supplied by the user.
 
 ## Package Layout
 
 ```text
 TGR-Net_Source_Code_and_Reproduction_Package_v1.0.0/
-├── code_overlay/                 # Files to copy into the base codebase
-│   ├── yolo_world/               # TGR-Net implementation (legacy Mamba-KAT identifiers retained)
-│   └── tools/                    # Training/testing, WeatherOWOD builders, analysis scripts
-├── configs/
-│   ├── open_world/weather_owod_mamba_kat/
-│   └── mamba_kat/
-├── checkpoints/                  # Optional trained TGR-Net checkpoint location
-├── data_assets/                  # Lightweight OW-OVD attribute/text assets
-├── env/                          # conda / pip freeze from ow_ovd environment
-├── results/                      # Table CSVs and semantic matching summaries
-├── tests/                        # Adapter/config smoke tests
-└── MANIFEST.files.txt
+├── code_overlay/                 # TGR-Net/OW-OVD code and tools copied into YOLO-World
+├── configs/                      # Training, evaluation, and ablation configurations
+├── checkpoints/                  # Target location for user-produced checkpoints
+├── data_assets/                  # Lightweight attribute and text assets
+├── docs/                         # Supporting documentation
+├── env/                          # Conda and pip environment records
+├── results/                      # Manuscript table data and semantic summaries
+├── tests/                        # Adapter, loss, detector, and config smoke tests
+├── CITATION.cff                  # Machine-readable citation metadata
+├── LICENSE                       # GPL-3.0-only license
+└── MANIFEST.files.txt            # Complete archived file list
 ```
 
-## Base Code Required
+## Compatible Base Code
 
-Use the original YOLO-World / OW-OVD project as the base repository. The reproduction needs these base components:
-
-1. YOLO-World V2 detector implementation and MMYOLO/MMDetection training stack.
-2. OW-OVD custom open-world detection pieces, especially:
-   - `OurDetector` / `OurHead` style detector and head;
-   - attribute embedding based unknown branch;
-   - OWOD evaluator for known / unknown / A-OSE metrics;
-   - Task 1 protocol using five known classes: `person`, `car`, `bus`, `bicycle`, `motorbike`.
-3. Pretrained base detector checkpoint:
-   - expected config path: `pretrained_models/yolo_world_v2_l_obj365v1_goldg_pretrain-a82b1fe3.pth`
-   - this large file is not included in this package.
-4. Dataset root expected by configs:
-   - default: `/data/weather/WeatherOWOD`
-   - edit `data_root` in `configs/open_world/weather_owod_mamba_kat/our/task1_mamba_kat_base.py` if your path differs.
-
-## Overlay Installation
-
-From the base repository root:
+- YOLO-World repository: <https://github.com/AILab-CVC/YOLO-World>
+- reference commit: `b449b98202e931590513c16e4830318be2dde946`
+- MMYOLO submodule revision recorded by that commit: `4d97b3a06609dba94b8ec584be2f2029cfdb7519`
 
 ```bash
-cp -R /path/to/TGR-Net_Source_Code_and_Reproduction_Package_v1.0.0/code_overlay/* .
-cp -R /path/to/TGR-Net_Source_Code_and_Reproduction_Package_v1.0.0/configs/* configs/
-cp -R /path/to/TGR-Net_Source_Code_and_Reproduction_Package_v1.0.0/data_assets/data/* data/
+git clone https://github.com/AILab-CVC/YOLO-World.git
+cd YOLO-World
+git checkout b449b98202e931590513c16e4830318be2dde946
+git submodule update --init --recursive
 ```
 
-Then check that these files exist in the base repo:
+The overlay supplies the TGR-Net and open-world additions referenced by the released configurations, including the adapter, detector/head extensions, channel-wise divergence (CWD) loss, evaluator, and WeatherOWOD utilities.
 
-```text
-yolo_world/models/adapters/mamba_kat_adapter.py
-yolo_world/models/detectors/yolo_world_mamba_kat.py
-yolo_world/models/detectors/our_mamba_kat.py
-yolo_world/models/losses/channel_wise_divergence_loss.py
-yolo_world/datasets/transformers/mm_transforms.py
-yolo_world/evaluator/OW_evaluator.py
-configs/open_world/weather_owod_mamba_kat/our/train_task1_mamba_kat.py
-```
+## Installation and Requirements
 
-## Environment
-
-The original training environment was named `ow_ovd`.
+From the cloned YOLO-World root, replace `/path/to/TGR-Net_release` with this repository:
 
 ```bash
-conda env create -f env/ow_ovd_environment.yml
+cp -R /path/to/TGR-Net_release/code_overlay/. .
+cp -R /path/to/TGR-Net_release/configs/. configs/
+mkdir -p data
+cp -R /path/to/TGR-Net_release/data_assets/data/. data/
+```
+
+The recorded environment used Python 3.10, PyTorch 2.0.1 with CUDA 11.8, MMCV 2.0.0, MMDetection 3.0.0, MMEngine 0.10.3, and MMYOLO 0.6.0.
+
+```bash
+conda env create -f /path/to/TGR-Net_release/env/ow_ovd_environment.yml
 conda activate ow_ovd
-pip install -r env/ow_ovd_requirements_freeze.txt
 pip install -v -e .
 ```
 
-If the frozen requirements conflict with your CUDA/PyTorch version, use `ow_ovd_environment.yml` as the primary reference and install the matching PyTorch/MMCV/MMEngine/MMDetection/MMYOLO stack manually.
+`env/ow_ovd_requirements_freeze.txt` records the full original environment. If it conflicts with local CUDA or hardware, use the Conda file and the versions above as the compatibility reference.
 
-## Data Needed
+Download the public [YOLO-World V2-L pretrained checkpoint](https://huggingface.co/wondervictor/YOLO-World/blob/main/yolo_world_v2_l_obj365v1_goldg_pretrain-a82b1fe3.pth) and place it at:
 
-The configs assume the following WeatherOWOD layout:
+```text
+pretrained_models/yolo_world_v2_l_obj365v1_goldg_pretrain-a82b1fe3.pth
+```
+
+## Dataset Information
+
+### WeatherOWOD training and benchmark data
+
+The protocol uses VOC-derived clean/adverse-weather pairs and the five Task 1 known classes `person`, `car`, `bus`, `bicycle`, and `motorbike`. Public VOC-FOG, VOC-Rain, VOC-Snow, and synthesis materials are available at <https://doi.org/10.21227/8g5n-b326>. VOC and RTTS source data are not redistributed; users must obtain them from their providers and comply with their terms.
+
+The default configurations expect:
 
 ```text
 /data/weather/WeatherOWOD/
@@ -94,51 +110,40 @@ The configs assume the following WeatherOWOD layout:
 │   ├── task1_test_snow/
 │   ├── task1_test_fog_rain_snow/
 │   └── task1_test_rtts/
-├── texts/
-│   ├── weather_t1_embeddings.npy
-│   ├── task1_class_texts.json
-│   ├── weather_voc20_embeddings.npy
-│   └── voc20_class_texts.json
-└── images / VOC-style split files
+└── texts/
+    ├── weather_t1_embeddings.npy
+    ├── task1_class_texts.json
+    ├── weather_voc20_embeddings.npy
+    └── voc20_class_texts.json
 ```
 
-The package includes lightweight OW-OVD assets under `data_assets/data/VOC2007/MOWOD/`, including `task_att_1_embeddings.pth`. It does not redistribute the full VOC, RTTS, or generated weather image data. The public adverse-weather datasets and synthesis materials used by this study are available from IEEE DataPort at <https://doi.org/10.21227/8g5n-b326>. Users remain responsible for complying with the licenses and terms of the original third-party datasets.
-
-DriverWeather contains road-scene images with potentially identifiable information and is not included in this public code release. Its access restriction and the available de-identified research materials are described in the associated manuscript.
-
-Use the dataset tools if you need to rebuild the protocol:
+If the root differs, edit `data_root` in `configs/open_world/weather_owod_mamba_kat/our/task1_mamba_kat_base.py` and the relevant evaluation `dataset_root` values. Dataset-building help:
 
 ```bash
-python code_overlay/tools/weather_owod/build_weather_owod.py --help
-python code_overlay/tools/adverse_weather/build_voc_weather_pairs.py --help
+python tools/weather_owod/build_weather_owod.py --help
+python tools/adverse_weather/build_voc_weather_pairs.py --help
 ```
 
-## Checkpoints
+### DriverWeather independent test set
 
-Trained model checkpoints are not included in this source-code release. The provided configurations, scripts, and machine-readable result summaries correspond to the reported experiments.
+[DriverWeather v1.0.0](https://doi.org/10.5281/zenodo.22121743) is publicly available under CC BY 4.0. It contains 473 images at 3840 × 2160 pixels and 473 paired LabelMe-compatible JSON annotations: 150 clean, 30 fog, and 293 rain images. The five annotated classes are `person`, `car`, `bus`, `bicycle`, and `motorbike`.
 
-Place the trained branch/full MMEngine checkpoint here:
+DriverWeather is a **pure test dataset**. It must not be used for training, validation, model selection, threshold selection, or hyperparameter tuning.
 
-```text
-checkpoints/mambakat_task1_full.pth
-```
+## Methodology and Reproduction Workflow
 
-For evaluation, either pass the real checkpoint path directly or copy it into the base repository, for example:
+1. Clone and pin the compatible YOLO-World revision.
+2. Apply the code/configuration overlay and lightweight assets.
+3. Recreate the recorded software environment.
+4. Obtain the third-party data and public synthesis resources, then build WeatherOWOD.
+5. Download the YOLO-World V2-L pretrained checkpoint.
+6. Train the formal Task 1 configuration or a specified ablation.
+7. Evaluate the trained checkpoint on the predefined conditions without tuning on DriverWeather.
+8. Run the analysis scripts and compare outputs with `results/`.
 
-```bash
-mkdir -p checkpoints
-cp /path/to/mambakat_task1_full.pth checkpoints/
-```
-
-The base YOLO-World pretrained checkpoint is separate and should be placed at:
-
-```text
-pretrained_models/yolo_world_v2_l_obj365v1_goldg_pretrain-a82b1fe3.pth
-```
+In the formal recipe, the base detector is frozen and only the adverse-weather feature adapter is trained. The Task 1 classification-loss weight is zero. During training, CWD uses the paired clean image as a detached clean-response regularization reference; inference uses only the degraded/test image.
 
 ## Training
-
-Main Task 1 training:
 
 ```bash
 python tools/train.py \
@@ -153,69 +158,89 @@ python tools/train.py configs/open_world/weather_owod_mamba_kat/our/train_task1_
 python tools/train.py configs/open_world/weather_owod_mamba_kat/our/train_task1_snow.py
 ```
 
-Ablation configs are under:
-
-```text
-configs/open_world/weather_owod_mamba_kat/ablations/
-```
+Ablation configurations are under `configs/open_world/weather_owod_mamba_kat/ablations/`.
 
 ## Evaluation
 
-TGR-Net adapter enabled (legacy configuration path retained):
+Place a trained checkpoint at `checkpoints/mambakat_task1_full.pth` or replace the path:
 
 ```bash
 python tools/test.py \
   configs/open_world/weather_owod_mamba_kat/our/eval_task1_weather_adapter.py \
   checkpoints/mambakat_task1_full.pth
-```
 
-Adapter bypass / OW-OVD baseline under the same checkpoint:
-
-```bash
 python tools/test.py \
   configs/open_world/weather_owod_mamba_kat/our/eval_task1_no_adapter.py \
   checkpoints/mambakat_task1_full.pth
 ```
 
-Weather-specific test configs:
+Condition-specific configurations for clean, fog, rain, snow, mixed weather, Foggy Driving, and RTTS are under `configs/open_world/weather_owod_mamba_kat/our/`.
 
-```text
-configs/open_world/weather_owod_mamba_kat/our/local_task1_open_test_thr030_clean.py
-configs/open_world/weather_owod_mamba_kat/our/local_task1_open_test_thr030_fog.py
-configs/open_world/weather_owod_mamba_kat/our/local_task1_open_test_thr030_rain.py
-configs/open_world/weather_owod_mamba_kat/our/local_task1_open_test_thr030_snow.py
-configs/open_world/weather_owod_mamba_kat/our/local_task1_open_test_thr030_rtts.py
-```
+## Analysis and Result Files
 
-## Analysis Scripts
+The `results/` directory contains aggregate machine-readable data for manuscript-table checking:
 
-Semantic matching statistics:
+| Purpose | File |
+| --- | --- |
+| Main results | `results/paper_tables/data/main_mambakat_full_results.csv` |
+| Strict baseline | `results/paper_tables/data/strict_baseline_results.csv` |
+| Module/loss ablations | `module_ablation_results.csv`, `loss_ablation_results.csv` |
+| Adapter/branch controls | `adapter_bypass_results.csv`, `branch_contribution_results.csv` |
+| Causal-intervention summaries | `causal_intervention_results.csv` |
+| Semantic summaries | `results/semantic_match_stats/full_all/` |
 
 ```bash
 python tools/analysis/run_semantic_match_full.py --help
-```
-
-Open-vocabulary added-class probe:
-
-```bash
 python tools/analysis/open_vocab_add_class_probe.py --help
 ```
 
-The package includes result summaries under `results/` for paper table checking, but not full per-sample logs except selected aggregate files.
+These CSV/JSON summaries are not substitutes for raw data, trained weights, or full prediction logs.
 
-## Smoke Tests
+## Verification
 
-After overlaying the package:
+After applying the overlay:
 
 ```bash
 pytest tests/test_mamba_kat_adapter.py
 pytest tests/test_channel_wise_divergence_loss.py
+pytest tests/test_mamba_kat_detector_smoke.py
 pytest tests/test_task1_ablation_configs.py
 ```
 
-## Notes
+These are lightweight code/configuration checks; they do not reproduce full training or benchmark metrics.
 
-- TGR-Net freezes the base OV-OW detector and trains only the adverse-weather feature adapter.
-- Classification loss is set to zero in the formal Task 1 recipe to avoid reshaping open-vocabulary semantic boundaries with five known classes only.
-- CWD uses the paired clean image only as a detached clean-response regularization reference during training; inference uses only the degraded/test image.
-- The current package is designed for reproducibility and review. It is not a minimal pip package.
+## Citation
+
+```bibtex
+@software{cui_2026_tgr_net,
+  author    = {Cui, Jiayu},
+  title     = {TGR-Net Source Code and Reproduction Package},
+  version   = {1.0.0},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.21888532},
+  url       = {https://doi.org/10.5281/zenodo.21888532}
+}
+```
+
+```bibtex
+@dataset{cuijiayu_2026_driverweather,
+  author    = {cuijiayu},
+  title     = {DriverWeather Test Dataset},
+  version   = {1.0.0},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.22121743},
+  url       = {https://doi.org/10.5281/zenodo.22121743}
+}
+```
+
+Also cite the associated manuscript and the original YOLO-World, MMDetection, MMYOLO, VOC, RTTS, and other resources as applicable.
+
+## License
+
+This release is distributed under GNU GPL v3.0 only (`GPL-3.0-only`); see [LICENSE](LICENSE). Third-party code, models, and datasets remain subject to their original licenses and terms. DriverWeather is released separately under CC BY 4.0.
+
+## Contributions and Questions
+
+Open reproducibility questions or corrections at <https://github.com/cuijiayu20/TGR-Net/issues>. Focused pull requests are welcome; do not include third-party data or files the contributor is not authorized to redistribute.
